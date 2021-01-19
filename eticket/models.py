@@ -44,4 +44,4 @@ class Problems(models.Model):
    status = models.BooleanField(default=False)
    date = models.DateTimeField(default=None, blank=True, null=True)
 
-   def __str__(self):
+   #def __str__(self):
