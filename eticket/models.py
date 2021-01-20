@@ -19,7 +19,7 @@ class Section(models.Model):
    def __str__(self):
       return f"{self.section_name}"
 class User(AbstractUser):
-   deptartment = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="dept_name", default=None, null=True)
+   department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="dept_name", default=None, null=True)
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
    pc_code = models.CharField(max_length=10, null=True, blank=True)
 

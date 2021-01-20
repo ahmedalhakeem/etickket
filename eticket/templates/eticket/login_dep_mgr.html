@@ -1,0 +1,15 @@
+{% extends "eticket/layout_login.html" %}
+
+{% block title %}
+    Login_manager
+{% endblock %}
+{% block body %}
+    <h1> تسجيل دخول رئيس القسم </h1>
+    <form action="{% url 'login_dep_mgr' %}" method="POST">
+        <div class="form-group">
+            {% csrf_token %}
+            {{ loginform }}
+        </div>
+        
+    </form>
+{% endblock %}
