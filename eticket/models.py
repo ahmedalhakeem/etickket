@@ -14,7 +14,7 @@ class Department(models.Model):
 
 class Section(models.Model):
    section_name = models.CharField(max_length=64, null=True, blank=True)
-   dept = models.ForeignKey(Department, on_delete=models.CASCADE)
+   #dept = models.ForeignKey(Department, on_delete=models.CASCADE)
 
    def __str__(self):
       return f"{self.section_name}"

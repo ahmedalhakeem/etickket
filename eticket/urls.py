@@ -8,5 +8,8 @@ urlpatterns =[
     path("login_dep_mgr", views.login_dep_mgr, name="login_dep_mgr"),
     path("login_sec_mgr", views.login_sec_mgr, name="login_sec_mgr"),
     path("login_it", views.login_it, name="login_it"),
-    path("login_emp", views.login_emp, name="login_emp")
+    path("login_emp", views.login_emp, name="login_emp"),
+    path("register_emp", views.register_emp, name="register_emp"),
+    path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
+    path("manager_profile", views.manager_profile, name="manager_profile")
 ]
