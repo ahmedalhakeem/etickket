@@ -18,6 +18,15 @@ def login_manager(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
+            print(login_user.group)
+            if login_user.groups == "office manager":
+                login(request, login_user)
+    
+            else:
+                return render(request, "eticket/login_manager.html",{
+                    "message": "You have no privilge access"
+                })
+            return render (request, 'eticket/manager_profile.html')
     # if get method!
     else:
         loginform= LoginForm()
@@ -66,6 +75,7 @@ def login_it(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
+
     # if get method!
     else:
         loginform= LoginForm()
