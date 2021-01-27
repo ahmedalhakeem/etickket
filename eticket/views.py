@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
+from django.contrib.auth.models import Group
 # Create your views here.
 def index(request):
 
@@ -18,8 +19,9 @@ def login_manager(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
-            print(login_user.group)
-            if login_user.groups == "office manager":
+            
+            if login_user.groups.filter(name="office manager").exists():
+
                 login(request, login_user)
     
             else:
@@ -43,6 +45,14 @@ def login_dep_mgr(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
+            if login_user.groups.filter(name="dept manager").exists():
+                login(request, login_user)
+            else:
+                return render(request, 'eticket/error.html',{
+                    'message': 'you have no valid access'
+                })
+            return render(request, 'eticket/dep_mgr_profile.html')            
+
     # if get method!
     else:
         loginform= LoginForm()
@@ -59,6 +69,13 @@ def login_sec_mgr(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
+            if login_user.groups.filter(name = 'section mgr').exists():
+                login(request, login_user)
+            else:
+                return render(request, 'eticket/login_sec_mgr.html',{
+                    'message': "you have no valid access"
+                })
+            return render (request, 'eticket/sec_mgr_profile.html')
     # if get method!
     else:
         loginform= LoginForm()
