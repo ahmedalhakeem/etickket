@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 def index(request):
 
     return render(request, 'eticket/index.html')
+    
 def login_manager(request):
     # if post method!
     if request.method == "POST":
@@ -92,6 +93,14 @@ def login_it(request):
             password = loginform.cleaned_data['password']
 
             login_user = authenticate(request, username=username, password=password)
+            # verify if the user belongs to it team
+            if login_user.groups.filter(name='technical team').exists():
+                login(request, login_user)
+            else:
+                return render(request, 'eticket/login_it.html',{
+                    "message": "نعتذر , ليس لديك الصلاحية للدخول الى هذه الصفحة"
+                })
+            return HttpResponseRedirect(reverse('it_profile', args=(login_user.id,)))
 
     # if get method!
     else:
@@ -150,3 +159,8 @@ def profile_emp(request, emp_id):
         })
 def manager_profile(request):
     return render(request, "eticket/manager_profile.html")
+def it_profile(request, user_id):
+    it_user = User.objects.get(pk=user_id)
+    return render (request, 'eticket/it_profile.html',{
+        "user": it_user
+    })

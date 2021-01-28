@@ -4,12 +4,16 @@
     Login_manager
 {% endblock %}
 {% block body %}
-    <h1>تسجيل دخول مهندسي التقنية</h1>
+<h1>تسجيل دخول مهندسي التقنية</h1>
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% endif %}
+    
     <form action="{% url 'login_it' %}" method="POST">
         <div class="form-group">
             {% csrf_token %}
             {{ loginform }}
         </div>
-        
+        <button>تسجيل</button>
     </form>
 {% endblock %}

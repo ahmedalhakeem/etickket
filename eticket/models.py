@@ -34,7 +34,7 @@ class ProblemType(models.Model):
    problem_type = models.CharField(max_length=2, choices=select_type, default=software,)
    description = models.CharField(max_length=100, null=True, default=None)
    def __str__(self):
-      return f'{self.problem_type}: {self.description} '
+      return f'{self.problem_type}: {self.description}'
 
 class Problems(models.Model):
    p_type = models.ForeignKey(ProblemType, on_delete=models.CASCADE, related_name='type')

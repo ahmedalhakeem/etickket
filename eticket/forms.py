@@ -18,3 +18,7 @@ class Register_empForm(forms.Form):
     section = forms.ModelChoiceField(label="", required=True, queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'placeholder':'Select Section',})) 
     
 
+#class Problem_typeForm(forms.Form):
+ #   problem_type = forms.CharField('')
+
+
