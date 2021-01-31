@@ -11,117 +11,51 @@ def index(request):
 
     return render(request, 'eticket/index.html')
     
-def login_manager(request):
+def login_master(request):
     # if post method!
     if request.method == "POST":
         loginform = LoginForm(request.POST or None)
         if loginform.is_valid():
             username = loginform.cleaned_data['username']
             password = loginform.cleaned_data['password']
-
-            login_user = authenticate(request, username=username, password=password)
             
+            
+            login_user = authenticate(request, username=username, password=password)
+
             if login_user.groups.filter(name="office manager").exists():
 
                 login(request, login_user)
+                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                
     
-            else:
-                return render(request, "eticket/login_manager.html",{
+            elif login_user.groups.filter(name="dept manager").exists():
+                login(request, login_user)
+                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                #return render(request, 'eticket/dep_mgr_profile.html')
+
+            elif login_user.groups.filter(name="section mgr").exists():
+                login(request, login_user)
+                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                #return render(request, "eticket/sec_mgr_profile.html")
+
+            elif login_user.groups.filter(name="technical team").exists():
+                login(request, login_user)
+                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                #return render(request, "eticket/it_profile.html")
+
+            elif login_user.groups.filter(name="employees").exists():
+                login(request, login_user)
+                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                #return render(request, "eticket/profile_emp.html")
+            
+            else: 
+                return render(request, "eticket/error.html",{
                     "message": "You have no privilge access"
                 })
-            return render (request, 'eticket/manager_profile.html')
     # if get method!
     else:
         loginform= LoginForm()
-        return render(request, 'eticket/login_manager.html',{
-            "loginform": loginform
-        })
-
-def login_dep_mgr(request):
-    # if post method!
-    if request.method == "POST":
-        loginform = LoginForm(request.POST or None)
-        if loginform.is_valid():
-            username = loginform.cleaned_data['username']
-            password = loginform.cleaned_data['password']
-
-            login_user = authenticate(request, username=username, password=password)
-            if login_user.groups.filter(name="dept manager").exists():
-                login(request, login_user)
-            else:
-                return render(request, 'eticket/error.html',{
-                    'message': 'you have no valid access'
-                })
-            return render(request, 'eticket/dep_mgr_profile.html')            
-
-    # if get method!
-    else:
-        loginform= LoginForm()
-        return render(request, 'eticket/login_dep_mgr.html',{
-            "loginform": loginform
-        })
-
-def login_sec_mgr(request):
-    # if post method!
-    if request.method == "POST":
-        loginform = LoginForm(request.POST or None)
-        if loginform.is_valid():
-            username = loginform.cleaned_data['username']
-            password = loginform.cleaned_data['password']
-
-            login_user = authenticate(request, username=username, password=password)
-            if login_user.groups.filter(name = 'section mgr').exists():
-                login(request, login_user)
-            else:
-                return render(request, 'eticket/login_sec_mgr.html',{
-                    'message': "you have no valid access"
-                })
-            return render (request, 'eticket/sec_mgr_profile.html')
-    # if get method!
-    else:
-        loginform= LoginForm()
-        return render(request, 'eticket/login_sec_mgr.html',{
-            "loginform": loginform
-        })
-
-def login_it(request):
-    # if post method!
-    if request.method == "POST":
-        loginform = LoginForm(request.POST or None)
-        if loginform.is_valid():
-            username = loginform.cleaned_data['username']
-            password = loginform.cleaned_data['password']
-
-            login_user = authenticate(request, username=username, password=password)
-            # verify if the user belongs to it team
-            if login_user.groups.filter(name='technical team').exists():
-                login(request, login_user)
-            else:
-                return render(request, 'eticket/login_it.html',{
-                    "message": "نعتذر , ليس لديك الصلاحية للدخول الى هذه الصفحة"
-                })
-            return HttpResponseRedirect(reverse('it_profile', args=(login_user.id,)))
-
-    # if get method!
-    else:
-        loginform= LoginForm()
-        return render(request, 'eticket/login_it.html',{
-            "loginform": loginform
-        })
-        
-def login_emp(request):
-    # if post method!
-    if request.method == "POST":
-        loginform = LoginForm(request.POST or None)
-        if loginform.is_valid():
-            username = loginform.cleaned_data['username']
-            password = loginform.cleaned_data['password']
-
-            login_user = authenticate(request, username=username, password=password)
-    # if get method!
-    else:
-        loginform= LoginForm()
-        return render(request, 'eticket/login_emp.html',{
+        return render(request, 'eticket/login_master.html',{
             "loginform": loginform
         })
 
@@ -157,8 +91,12 @@ def profile_emp(request, emp_id):
         return render(request, "eticket/profile_emp.html",{
             "user": user            
         })
-def manager_profile(request):
-    return render(request, "eticket/manager_profile.html")
+def manager_profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    group_status = user.groups.get()
+    return render(request, "eticket/manager_profile.html",{
+        "user": user
+    })
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
     return render (request, 'eticket/it_profile.html',{

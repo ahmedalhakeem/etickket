@@ -2,5 +2,9 @@
 {% load static %}
 {% block title%}مدير الدائرة{% endblock %}
 {% block body %}
+    {% if user.username == 'manager' %}
     <h1>مدير مكتب الفرات الاوسط</h1>
+    {% elif user.username == 'ahmed_a' %}
+        <h1>مسؤول قسم الاتصالات</h1>
+    {% endif %}
 {% endblock %}
