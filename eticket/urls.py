@@ -12,5 +12,7 @@ urlpatterns =[
     path("register_emp", views.register_emp, name="register_emp"),
     path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
     path("manager_profile/<int:user_id>", views.manager_profile, name="manager_profile"),
-    path("it_profile/<int:user_id>", views.it_profile, name="it_profile")
+    path("it_profile/<int:user_id>", views.it_profile, name="it_profile"),
+    path("dept_mgr_profile/<int:user_id>", views.dept_mgr_profile, name="dept_mgr_profile"),
+    path("sec_mgr_profile/<int:user_id>", views.sec_mgr_profile, name="sec_mgr_profile")
 ]

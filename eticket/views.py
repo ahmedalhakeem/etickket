@@ -30,22 +30,22 @@ def login_master(request):
     
             elif login_user.groups.filter(name="dept manager").exists():
                 login(request, login_user)
-                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                return HttpResponseRedirect(reverse('dept_mgr_profile',args=(login_user.id,)))
                 #return render(request, 'eticket/dep_mgr_profile.html')
 
             elif login_user.groups.filter(name="section mgr").exists():
                 login(request, login_user)
-                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                return HttpResponseRedirect(reverse('sec_mgr_profile',args=(login_user.id,)))
                 #return render(request, "eticket/sec_mgr_profile.html")
 
             elif login_user.groups.filter(name="technical team").exists():
                 login(request, login_user)
-                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                return HttpResponseRedirect(reverse('it_profile',args=(login_user.id,)))
                 #return render(request, "eticket/it_profile.html")
 
             elif login_user.groups.filter(name="employees").exists():
                 login(request, login_user)
-                return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
+                return HttpResponseRedirect(reverse('profile_emp',args=(login_user.id,)))
                 #return render(request, "eticket/profile_emp.html")
             
             else: 
@@ -77,8 +77,13 @@ def register_emp(request):
 
             user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, 
             username=username, password=password,pc_code=pc_code, department=department, section=section)
+            
+            if user.section == "IT":
+                user.groups.add(4)
+            else:
+                user.groups.add(5)
+            return HttpResponseRedirect(reverse('login_master'))
             user.save()
-            return HttpResponseRedirect(reverse('profile_emp', args=(user.id,)))
     else:
         new_user=Register_empForm()
         return render(request, 'eticket/register_emp.html',{
@@ -91,14 +96,27 @@ def profile_emp(request, emp_id):
         return render(request, "eticket/profile_emp.html",{
             "user": user            
         })
+# profile page for manager
 def manager_profile(request, user_id):
     user = User.objects.get(pk=user_id)
-    group_status = user.groups.get()
     return render(request, "eticket/manager_profile.html",{
         "user": user
     })
+# profile page for it team
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
-    return render (request, 'eticket/it_profile.html',{
+    return render (request, "eticket/it_profile.html",{
         "user": it_user
+    })
+# profile page for department manager
+def dept_mgr_profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    return render(request, "eticket/dept_mgr_profile.html",{
+        "user": user
+    })
+# profile page for section manager
+def sec_mgr_profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    return render(request, 'eticket/sec_mgr_profile.html',{
+        "user": user
     })
