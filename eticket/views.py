@@ -6,6 +6,7 @@ from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
+from .models import User, Section, Department, Problems, ProblemType
 # Create your views here.
 def index(request):
 
@@ -78,12 +79,18 @@ def register_emp(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, 
             username=username, password=password,pc_code=pc_code, department=department, section=section)
             
-            if user.section == "IT":
-                user.groups.add(4)
-            else:
+            it_section = Section.objects.get(section_name="IT")
+            print(it_section)
+            if user.section != it_section:
+                x=True
                 user.groups.add(5)
+            else:
+                x=False
+                user.groups.add(4)
+            print(x)
             return HttpResponseRedirect(reverse('login_master'))
-            user.save()
+           
+
     else:
         new_user=Register_empForm()
         return render(request, 'eticket/register_emp.html',{
