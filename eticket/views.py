@@ -78,10 +78,10 @@ def register_emp(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, 
             username=username, password=password,pc_code=pc_code, department=department, section=section)
             
-            if user.section == "IT":
-                user.groups.add(4)
-            else:
+            if user.section =! "IT":
                 user.groups.add(5)
+            else:
+                user.groups.add(4)
             return HttpResponseRedirect(reverse('login_master'))
             user.save()
     else:
