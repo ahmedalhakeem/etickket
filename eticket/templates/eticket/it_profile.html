@@ -4,4 +4,6 @@
 {% block body %}
     <h1>شعبة تكنلوجيا المعلومات</h1>
     <h2>اسم المستخدم: {{user.username}}</h2>
+    <a href="{% url 'logout_page' %}">تسجيل خروج</a>
+
 {% endblock %}

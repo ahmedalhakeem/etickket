@@ -18,8 +18,9 @@ class Register_empForm(forms.Form):
     section = forms.ModelChoiceField(label="", required=True, queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'placeholder':'Select Section',})) 
     
 
-#class Problem_typeForm(forms.Form):
- #   problem_type = forms.CharField('')
+class Tech_issuesForm(forms.Form):
+    p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
+    user = forms.ModelChoiceField(label="اسم المستخدم", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class':'form-control', }))
 
 
 

@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموظف</title>
-</head>
-<body>
+{% extends "eticket/layout_profile.html" %}
+    {% block title %}
+        صفحة الموظفين
+    {% endblock %}
+    {% block body %}
     <h2>{{user.first_name}} {{ user.last_name }}</h2>
     <h2>{{user.email}}</h2>
+    <a href="{% url 'logout_page' %}">تسجيل خروج</a>
+    {% endblock %}
+
     
-</body>
-</html>
+

@@ -40,7 +40,6 @@ class Problems(models.Model):
    p_type = models.ForeignKey(ProblemType, on_delete=models.CASCADE, related_name='type')
    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_problem", default=None)
    user_solver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_solution", default=None)
-
    status = models.BooleanField(default=False)
    date = models.DateTimeField(default=None, blank=True, null=True)
 

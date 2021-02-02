@@ -6,6 +6,7 @@ from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
+from .models import User, Section, Department, Problems, ProblemType
 # Create your views here.
 def index(request):
 
@@ -59,7 +60,9 @@ def login_master(request):
             "loginform": loginform
         })
 
-
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
 
 def register_emp(request):
     # if method is post!
@@ -78,18 +81,25 @@ def register_emp(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email, 
             username=username, password=password,pc_code=pc_code, department=department, section=section)
             
-            if user.section =! "IT":
+            it_section = Section.objects.get(section_name="IT")
+            print(it_section)
+            if user.section != it_section:
+                x=True
                 user.groups.add(5)
             else:
+                x=False
                 user.groups.add(4)
+            print(x)
             return HttpResponseRedirect(reverse('login_master'))
-            user.save()
+           
+
     else:
         new_user=Register_empForm()
         return render(request, 'eticket/register_emp.html',{
             "user": new_user
         })
-# Profile page for each employee   
+# Profile page for each employee 
+@login_required  
 def profile_emp(request, emp_id):
     user = User.objects.get(pk=emp_id)
     if user is not None:
@@ -97,6 +107,7 @@ def profile_emp(request, emp_id):
             "user": user            
         })
 # profile page for manager
+@login_required
 def manager_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/manager_profile.html",{
@@ -109,12 +120,14 @@ def it_profile(request, user_id):
         "user": it_user
     })
 # profile page for department manager
+@login_required
 def dept_mgr_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/dept_mgr_profile.html",{
         "user": user
     })
 # profile page for section manager
+@login_required
 def sec_mgr_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, 'eticket/sec_mgr_profile.html',{
