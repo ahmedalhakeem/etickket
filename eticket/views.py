@@ -6,7 +6,7 @@ from .forms import *
 from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
-from .models import User, Section, Department, Problems, ProblemType
+from .models import User, Section, Department, Tickets
 # Create your views here.
 def index(request):
 
@@ -102,16 +102,22 @@ def register_emp(request):
 @login_required  
 def profile_emp(request, emp_id):
     user = User.objects.get(pk=emp_id)
+    ticket = Tickets.objects.filter(employee=user).all()
+    print(ticket)
+    #user_tickets = Problems.objects.filter(pk=user)
     if user is not None:
         return render(request, "eticket/profile_emp.html",{
-            "user": user            
+            "user": user,
+            "ticket": ticket            
         })
 # profile page for manager
 @login_required
 def manager_profile(request, user_id):
+    tickets = Tickets.objects.all()
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/manager_profile.html",{
-        "user": user
+        "user": user,
+        "all_tickets": tickets
     })
 # profile page for it team
 def it_profile(request, user_id):

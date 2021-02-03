@@ -8,4 +8,16 @@
         <h1>مسؤول قسم الاتصالات</h1>
     {% endif %}
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
+    {% for item in all_tickets %}
+    <div class="all_tickets">
+        
+    </div>
+        <p>{{item.ticket_type}}</p>
+        <p>{{item.ticket_status}}</p>
+        <p>{{item.title}}</p>
+        <p>{{item.descriptions}}</p>
+        <p>{{item.date}}</p>
+        <p>{{item.employee}}</p>
+        <p>{{item.it_user}}</p>
+    {% endfor %}
 {% endblock %}

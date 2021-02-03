@@ -23,24 +23,33 @@ class User(AbstractUser):
    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="sect_name", default=None, null=True) 
    pc_code = models.CharField(max_length=10, null=True, blank=True)
 
-class ProblemType(models.Model):
-   software = 'SW'
+class Tickets(models.Model):
+   software= 'SW'
    hardware = 'HW'
    
+   high_priority = "مهمة جدا"
+   normal_priority = "مهمة"
+   low_priority = "متوسطة الاهمية"
+
    select_type = [
       (software, 'software'),
-      (hardware, 'hardware'),
+      (hardware, 'hardware')
+
    ]
-   problem_type = models.CharField(max_length=2, choices=select_type, default=software,)
-   description = models.CharField(max_length=100, null=True, default=None)
+   status = [
+      (high_priority, 'high_priority'),
+      (normal_priority, 'normal_priority'),
+      (low_priority, 'low_priority')
+
+   ]
+
+   ticket_type = models.CharField(max_length=2, choices=select_type, default=software,)
+   ticket_status= models.CharField(max_length=14, choices=status, default=high_priority,)
+   title = models.CharField(max_length=30, blank=True, null=True,)
+   description = models.TextField(max_length=100, blank=True, null=True)
+   date = models.DateTimeField(auto_now_add=True)
+   employee = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+   it_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="it_user", null=True, blank=True)
+
    def __str__(self):
-      return f'{self.problem_type}: {self.description}'
-
-class Problems(models.Model):
-   p_type = models.ForeignKey(ProblemType, on_delete=models.CASCADE, related_name='type')
-   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_problem", default=None)
-   user_solver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="has_solution", default=None)
-   status = models.BooleanField(default=False)
-   date = models.DateTimeField(default=None, blank=True, null=True)
-
-   #def __str__(self):
+      return f"{self.ticket_type}, {self.ticket_status}, {self.title}, {self.description}, on {self.date}, by {self.employee}, solved_by {self.it_user}"

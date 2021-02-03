@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from eticket.models import User, Department, Section, Problems, ProblemType
+from eticket.models import User, Department, Section, Tickets
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="",  required=True,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username',}))
@@ -18,9 +18,9 @@ class Register_empForm(forms.Form):
     section = forms.ModelChoiceField(label="", required=True, queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'placeholder':'Select Section',})) 
     
 
-class Tech_issuesForm(forms.Form):
-    p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
-    user = forms.ModelChoiceField(label="اسم المستخدم", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class':'form-control', }))
+#class Tech_issuesForm(forms.Form):
+ #   p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
+  #  user = forms.ModelChoiceField(label="اسم المستخدم", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class':'form-control', }))
 
 
 

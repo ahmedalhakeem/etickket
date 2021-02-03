@@ -6,6 +6,24 @@
     <h2>{{user.first_name}} {{ user.last_name }}</h2>
     <h2>{{user.email}}</h2>
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
+    <br>
+    {% for item in ticket %}
+        {{item.ticket_type}}
+        {{item.ticket_status}}
+        {{item.title}}
+    {% endfor %}
+    <!--<div class="wrapper">
+        <div class="ticket-details">
+
+            <h2>ticket no.</h2>
+            <p> descriptions</p>
+            <h2>status</h2>
+            <h2>user</h2>
+            <h2>it-person</h2>
+            <p>date</p>
+            
+        </div>
+    </div>-->
     {% endblock %}
 
     
