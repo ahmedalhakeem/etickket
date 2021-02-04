@@ -31,20 +31,30 @@ class Tickets(models.Model):
    normal_priority = "مهمة"
    low_priority = "متوسطة الاهمية"
 
+   accomplished = "accomplished"
+   unaccomplished = "unaccomplished"
+
+   status = [
+      (accomplished, 'تم الانجاز'),
+      (unaccomplished, 'لم يتم الانجاز')
+   ]
+
    select_type = [
       (software, 'software'),
       (hardware, 'hardware')
 
    ]
-   status = [
-      (high_priority, 'high_priority'),
-      (normal_priority, 'normal_priority'),
-      (low_priority, 'low_priority')
+   priority = [
+      (high_priority, 'مهمة جدا'),
+      (normal_priority, 'مهمة'),
+      (low_priority, 'غير مهمة ')
 
    ]
-
+   
    ticket_type = models.CharField(max_length=2, choices=select_type, default=software,)
-   ticket_status= models.CharField(max_length=14, choices=status, default=high_priority,)
+   ticket_priority= models.CharField(max_length=14, choices=priority, default=high_priority,)
+   ticket_status = models.CharField(max_length=30, choices=status, default=unaccomplished, )
+
    title = models.CharField(max_length=30, blank=True, null=True,)
    description = models.TextField(max_length=100, blank=True, null=True)
    date = models.DateTimeField(auto_now_add=True)

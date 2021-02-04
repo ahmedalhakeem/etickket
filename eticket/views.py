@@ -120,6 +120,7 @@ def manager_profile(request, user_id):
         "all_tickets": tickets
     })
 # profile page for it team
+@login_required
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
     return render (request, "eticket/it_profile.html",{
