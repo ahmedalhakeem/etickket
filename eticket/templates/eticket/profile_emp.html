@@ -3,6 +3,7 @@
         صفحة الموظفين
     {% endblock %}
     {% block body %}
+    <br>
     <h2>{{user.first_name}} {{ user.last_name }}</h2>
     <h2>{{user.email}}</h2>
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
