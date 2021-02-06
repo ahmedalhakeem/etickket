@@ -23,28 +23,28 @@ def login_master(request):
             
             login_user = authenticate(request, username=username, password=password)
 
-            if login_user.groups.filter(name="office manager").exists():
+            if login_user.groups.filter(name="manager").exists():
 
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('manager_profile',args=(login_user.id,)))
                 
     
-            elif login_user.groups.filter(name="dept manager").exists():
+            elif login_user.groups.filter(name="department_manager").exists():
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('dept_mgr_profile',args=(login_user.id,)))
                 #return render(request, 'eticket/dep_mgr_profile.html')
 
-            elif login_user.groups.filter(name="section mgr").exists():
+            elif login_user.groups.filter(name="section manager").exists():
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('sec_mgr_profile',args=(login_user.id,)))
                 #return render(request, "eticket/sec_mgr_profile.html")
 
-            elif login_user.groups.filter(name="technical team").exists():
+            elif login_user.groups.filter(name="tech").exists():
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('it_profile',args=(login_user.id,)))
                 #return render(request, "eticket/it_profile.html")
 
-            elif login_user.groups.filter(name="employees").exists():
+            elif login_user.groups.filter(name="employee").exists():
                 login(request, login_user)
                 return HttpResponseRedirect(reverse('profile_emp',args=(login_user.id,)))
                 #return render(request, "eticket/profile_emp.html")
@@ -98,6 +98,8 @@ def register_emp(request):
         return render(request, 'eticket/register_emp.html',{
             "user": new_user
         })
+
+
 # Profile page for each employee 
 @login_required  
 def profile_emp(request, emp_id):
@@ -120,6 +122,7 @@ def manager_profile(request, user_id):
         "all_tickets": tickets
     })
 # profile page for it team
+@login_required
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
     return render (request, "eticket/it_profile.html",{

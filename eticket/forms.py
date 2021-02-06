@@ -16,7 +16,19 @@ class Register_empForm(forms.Form):
     pc_code = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'PC-code', }))
     department = forms.ModelChoiceField(label="", required=False, queryset=Department.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'placeholder':'Select Department',})) 
     section = forms.ModelChoiceField(label="", required=True, queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control', 'placeholder':'Select Section',})) 
-    
+
+
+
+class TicketForm(forms.Form):
+    ticket_type = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
+    ticket_priority = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
+    ticket_status = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class':'form-control',}))
+    title = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter ticket title', })) 
+    description= forms.CharField(label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Enter details if any',}))
+    date = forms.DateField(label="", required=True, widget=forms.DateTimeField())
+    employee = forms.ModelChoiceField(label="", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
+    it_user = forms.ModelChoiceField(label="", required=False, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
+      
 
 #class Tech_issuesForm(forms.Form):
  #   p_type = forms.ModelChoiceField(label="المشكلة", required=True,queryset=ProblemType.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
