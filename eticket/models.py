@@ -37,9 +37,9 @@ class Tickets(models.Model):
 
    ]
    status = [
-      (high_priority, 'high_priority'),
-      (normal_priority, 'normal_priority'),
-      (low_priority, 'low_priority')
+      (high_priority, 'مهمة جدا'),
+      (normal_priority, 'متوسطة الاهمية'),
+      (low_priority, 'غير مهمة')
 
    ]
 
