@@ -19,13 +19,17 @@ class Register_empForm(forms.Form):
 
 
 
-class TicketForm(forms.Form):
+class TicketForm(ModelForm):
+    class Meta:
+        model = Tickets
+        fields = ['ticket_type', 'ticket_priority', 'ticket_status', 'title', 'description', 'employee', 'it_user']
+class TicketFormsss(forms.Form):
     ticket_type = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
     ticket_priority = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class': 'form-control',}))
     ticket_status = forms.CharField(label="", required=True, widget=forms.Select(attrs={'class':'form-control',}))
     title = forms.CharField(label="", required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter ticket title', })) 
     description= forms.CharField(label="", required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Enter details if any',}))
-    date = forms.DateField(label="", required=True, widget=forms.DateTimeField())
+    #date = forms.DateField(label="", widget=forms.DateTimeField())
     employee = forms.ModelChoiceField(label="", required=True, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
     it_user = forms.ModelChoiceField(label="", required=False, queryset=User.objects.all(), widget=forms.Select(attrs={'class': 'form-control',}))
       

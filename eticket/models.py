@@ -62,4 +62,4 @@ class Tickets(models.Model):
    it_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="it_user", null=True, blank=True)
 
    def __str__(self):
-      return f"{self.ticket_type}, {self.ticket_status}, {self.title}, {self.ticket_priority} {self.description}, on {self.date}, by {self.employee}, solved_by {self.it_user}"
+      return f"{self.ticket_type}, {self.ticket_status}, {self.title}, {self.ticket_priority} {self.description}, by {self.employee}, solved_by {self.it_user}"

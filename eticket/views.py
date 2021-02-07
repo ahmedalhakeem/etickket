@@ -106,11 +106,13 @@ def profile_emp(request, emp_id):
     user = User.objects.get(pk=emp_id)
     ticket = Tickets.objects.filter(employee=user).all()
     print(ticket)
+    ticketform = TicketForm()
     #user_tickets = Problems.objects.filter(pk=user)
     if user is not None:
         return render(request, "eticket/profile_emp.html",{
             "user": user,
-            "ticket": ticket            
+            "ticket": ticket,
+            "ticketform": ticketform            
         })
 # profile page for manager
 @login_required
@@ -125,8 +127,10 @@ def manager_profile(request, user_id):
 @login_required
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
+    #ticket = TicketForm()
     return render (request, "eticket/it_profile.html",{
-        "user": it_user
+        "user": it_user,
+        #"ticket" : ticket
     })
 # profile page for department manager
 @login_required
