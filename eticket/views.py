@@ -1,6 +1,7 @@
+import json
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required 
 from .forms import *
 from django.db import IntegrityError
@@ -121,7 +122,8 @@ def manager_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/manager_profile.html",{
         "user": user,
-        "all_tickets": tickets
+        "all_tickets": tickets,
+        "ticket_form" : TicketForm()
     })
 # profile page for it team
 @login_required
@@ -137,12 +139,22 @@ def it_profile(request, user_id):
 def dept_mgr_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/dept_mgr_profile.html",{
-        "user": user
+        "user": user,
+        "ticket_form": TicketForm()
     })
 # profile page for section manager
 @login_required
 def sec_mgr_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     return render(request, 'eticket/sec_mgr_profile.html',{
-        "user": user
+        "user": user, 
+        "ticket_form": TicketForm()
     })
+
+def tickets(request):
+    if request.method != 'POST':
+        return JsonResponse({"error": "Post request required" }, status=400)
+    
+    #data = json.loads(request.body)
+
+    

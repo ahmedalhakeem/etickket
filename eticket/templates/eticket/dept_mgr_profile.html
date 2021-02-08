@@ -2,7 +2,17 @@
 {% load static %}
 {% block title%}مسؤول قسم الاتصالات{% endblock %}
 {% block body %}
+<br>
+
     <h1>مسؤول قسم الاتصالات</h1>
+
+
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        {{ ticket_form.as_table }}
+        <button>Send</button>
+    </form>
+
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
 
 {% endblock %}

@@ -9,22 +9,32 @@
         
    
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
+
+    <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        {{ ticket_form.as_table }}
+        <button>send</button>
+    </form>
     
+    <br>
     <div class="all_tickets">
         
-        <table class="table">
-            <tr>
-                <th>ticket no.</th>
-                <th>ticket title</th>
-                <th>ticket type</th>
-                <th>ticket_priority</th>
-                <th>ticket_status</th>
-                <th>ticket date</th>
-                <th>ticket sender</th>
-                <th>ticket sender secttion</th>
-                <th>ticket sender department</th>
-                <th>ticket solver</th>
-            </tr>
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ticket no.</th>
+                    <th>ticket title</th>
+                    <th>ticket type</th>
+                    <th>ticket_priority</th>
+                    <th>ticket_status</th>
+                    <th>ticket date</th>
+                    <th>ticket sender</th>
+                    <th>ticket sender secttion</th>
+                    <th>ticket sender department</th>
+                    <th>ticket solver</th>
+                </tr>
+            </thead>
+            
             {% for item in all_tickets %}
             <tr>
                 <td>{{item.id}}</td>
