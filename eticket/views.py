@@ -106,7 +106,7 @@ def register_emp(request):
 def profile_emp(request, emp_id):
     user = User.objects.get(pk=emp_id)
     ticket = Tickets.objects.filter(employee=user).all()
-    print(ticket)
+    #print(ticket)
     ticketform = TicketForm()
     #user_tickets = Problems.objects.filter(pk=user)
     if user is not None:
@@ -151,10 +151,23 @@ def sec_mgr_profile(request, user_id):
         "ticket_form": TicketForm()
     })
 
-def tickets(request):
+def create_ticket(request):
     if request.method != 'POST':
         return JsonResponse({"error": "Post request required" }, status=400)
-    
+    data = json.loads(request.body)
+    title2 = data.get("title", "")
+    description = data.get("description", "")
+    print(title2)
+    #reciever = User.objects.get(username='manager')
+    #sender = User.objects.get(pk=request.GET["sender"])
+    #title = request.GET['title']
+    #description= request.GET['description']
+    #ticket  = Tickets(title =title, description=description, employee=sender, it_user=reciever)
+    #if ticket is not None:
+    #ticket.save()
+    return JsonResponse({'success': 'Ticket sent succesfully'})
+    #else:
+    #    return HttpResponse('Error')
     #data = json.loads(request.body)
 
     

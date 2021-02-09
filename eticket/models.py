@@ -51,9 +51,9 @@ class Tickets(models.Model):
 
    ]
    
-   ticket_type = models.CharField(max_length=2, choices=select_type, default=software,)
-   ticket_priority= models.CharField(max_length=14, choices=priority, default=high_priority,)
-   ticket_status = models.CharField(max_length=30, choices=status, default=unaccomplished, )
+   ticket_type = models.CharField(max_length=2, choices=select_type, default=software, null=True)
+   ticket_priority= models.CharField(max_length=14, choices=priority, default=high_priority, null=True)
+   ticket_status = models.CharField(max_length=30, choices=status, default=unaccomplished, null=True)
 
    title = models.CharField(max_length=30, blank=True, null=True,)
    description = models.TextField(max_length=100, blank=True, null=True)

@@ -1,4 +1,5 @@
 {% extends "eticket/layout_profile.html" %}
+{% load static %}
     {% block title %}
         صفحة الموظفين
     {% endblock %}
@@ -14,9 +15,13 @@
         {{ticketform.as_table }}
         <button>Send</button>
     </form>-->
-    <form class="compose-ticket">
+    <form action="{% url 'create_ticket' %}" class="compose-ticket" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             <input disabled class="form-control" value="{{ request.user.email }}">
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="user-id" id="{{ request.user.id }}">
         </div>
         <div class="form-group">
               <input type="text" name="title" class="title" placeholder="Title">
@@ -84,6 +89,9 @@
             
         </div>
     </div>-->
+    {% endblock %}
+    {% block script %}
+        <script src="{% static 'eticket/index.js' %}"></script>
     {% endblock %}
 
     
