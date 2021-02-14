@@ -27,9 +27,9 @@ class Tickets(models.Model):
    software= 'SW'
    hardware = 'HW'
    
-   high_priority = "مهمة جدا"
-   normal_priority = "مهمة"
-   low_priority = "متوسطة الاهمية"
+   high_priority = "high_priority"
+   normal_priority = "normal_priority"
+   low_priority = "low_priority"
 
    accomplished = "accomplished"
    unaccomplished = "unaccomplished"
@@ -45,14 +45,14 @@ class Tickets(models.Model):
 
    ]
    priority = [
-      (high_priority, 'مهمة جدا'),
-      (normal_priority, 'مهمة'),
-      (low_priority, 'غير مهمة ')
+      (high_priority, 'high_priority'),
+      (normal_priority, 'normal_priority'),
+      (low_priority, 'low_priority ')
 
    ]
    
    ticket_type = models.CharField(max_length=2, choices=select_type, default=software, null=True)
-   ticket_priority= models.CharField(max_length=14, choices=priority, default=high_priority, null=True)
+   ticket_priority= models.CharField(max_length=20, choices=priority, default=high_priority, null=True)
    ticket_status = models.CharField(max_length=30, choices=status, default=unaccomplished, null=True)
 
    title = models.CharField(max_length=30, blank=True, null=True,)
@@ -62,4 +62,4 @@ class Tickets(models.Model):
    it_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="it_user", null=True, blank=True)
 
    def __str__(self):
-      return f"{self.ticket_type}, {self.ticket_status}, {self.title}, {self.ticket_priority} {self.description}, by {self.employee}, solved_by {self.it_user}"
+      return f" {self.id}, {self.ticket_type}, {self.ticket_status}, {self.title}, {self.ticket_priority} {self.description}, by {self.employee}, solved_by {self.it_user}"

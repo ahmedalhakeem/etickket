@@ -18,5 +18,5 @@ urlpatterns =[
     path("sec_mgr_profile/<int:user_id>", views.sec_mgr_profile, name="sec_mgr_profile"),
 
     # API routes
-    path("tickets", views.create_ticket, name="create_ticket")
+    path("profile_emp/<int:emp_id>/tickets", views.tickets, name="tickets")
 ]

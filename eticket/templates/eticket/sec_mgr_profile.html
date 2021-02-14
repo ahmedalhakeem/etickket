@@ -5,12 +5,63 @@
 <br>
     <h1>مسؤول شعبة تكنلوجيا المعلومات</h1>
     <br>
+    <div class="convert-ticket">
+        <form class="convert-form">
+            Ticket Number : <input type="number" id="ticket-number">
+                            <select  id="selected_solver">
+                                {% for it_user in it_users %}
+                                <option value="{{it_user.username}}">{{it_user.username}}</option>
+                                {% endfor %}
+                            </select>
+                            
+            Change Status  : <select id="select-status">
+                                <option value="accomplished">accomplished</option>
+                                <option value="unaccomplished">unaccomplished</option>
 
-    <form action="{% url 'index' %}" method="POST">
+                             </select>
+                             <input type="submit" value="convert ticket">
+        </form>
+    </div>
+    <br>
+    <div class="all_tickets">
+        
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ticket no.</th>
+                    <th>ticket title</th>
+                    <th>ticket type</th>
+                    <th>ticket_priority</th>
+                    <th>ticket_status</th>
+                    <th>ticket date</th>
+                    <th>ticket sender</th>
+                    <th>ticket sender secttion</th>
+                    <!--<th>ticket solver</th>-->
+                </tr>
+            </thead>
+            {% for ticket in tickets %}
+                <tr>
+                    <td id="{{ticket.id}}">{{ticket.id}}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ticket.ticket_type}}</td>
+                    <td>{{ticket.ticket_priority}}</td>
+                    <td>{{ticket.ticket_status}}</td>
+                    <td>{{ticket.date}}</td>
+                    <td>{{ticket.employee}}</td>
+                    <td>{{ticket.employee.section}}</td>
+  
+
+                </tr>
+            {% endfor %}
+            </table>
+    <!--<form action="{% url 'index' %}" method="POST">
         {% csrf_token %}
         {{ ticket_form.as_table }}
         <button>Send</button>
-    </form>
+    </form>-->
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
 
+{% endblock %}
+{% block script %}
+    <script src="{% static 'eticket/index2.js' %}"></script>
 {% endblock %}

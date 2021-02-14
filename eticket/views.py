@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.urls import reverse
 from django.contrib.auth.models import Group
 from .models import User, Section, Department, Tickets
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def index(request):
 
@@ -118,7 +119,7 @@ def profile_emp(request, emp_id):
 # profile page for manager
 @login_required
 def manager_profile(request, user_id):
-    tickets = Tickets.objects.all()
+    tickets = Tickets.objects.filter(ticket_status="accomplished")
     user = User.objects.get(pk=user_id)
     return render(request, "eticket/manager_profile.html",{
         "user": user,
@@ -146,28 +147,36 @@ def dept_mgr_profile(request, user_id):
 @login_required
 def sec_mgr_profile(request, user_id):
     user = User.objects.get(pk=user_id)
-    return render(request, 'eticket/sec_mgr_profile.html',{
-        "user": user, 
-        "ticket_form": TicketForm()
-    })
-
-def create_ticket(request):
-    if request.method != 'POST':
-        return JsonResponse({"error": "Post request required" }, status=400)
-    data = json.loads(request.body)
-    title2 = data.get("title", "")
-    description = data.get("description", "")
-    print(title2)
-    #reciever = User.objects.get(username='manager')
-    #sender = User.objects.get(pk=request.GET["sender"])
-    #title = request.GET['title']
-    #description= request.GET['description']
-    #ticket  = Tickets(title =title, description=description, employee=sender, it_user=reciever)
-    #if ticket is not None:
-    #ticket.save()
-    return JsonResponse({'success': 'Ticket sent succesfully'})
-    #else:
-    #    return HttpResponse('Error')
-    #data = json.loads(request.body)
-
+    tech_group = Group.objects.get(name="tech")
+    it_users = User.objects.filter(groups=tech_group)
     
+    tickets = Tickets.objects.all()
+    #for item in tickets:
+    #    print(item.id)
+    return render(request, 'eticket/sec_mgr_profile.html',{
+        "user": user,
+        "it_users": it_users,
+        "tickets": tickets 
+        #"ticket_form": TicketForm()
+    })
+@csrf_exempt
+def tickets(request, emp_id):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST method is required"})
+    
+    data = json.loads(request.body)
+
+    user = User.objects.get(username=data['sender'])
+    print(user)
+    #it_user = User.objects.get(username="")
+    title = data.get('title')
+    print(title)
+    description = data['description']
+    priority = data['priority']
+    reciever = User.objects.get(username="haiderk")
+
+    new_ticket = Tickets(title=title, ticket_priority=priority, description=description, employee=user, it_user=reciever)
+    new_ticket.save()
+    #print(sender)
+
+    return JsonResponse({'success': "responded successfully"})

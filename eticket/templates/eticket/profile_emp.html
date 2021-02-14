@@ -15,31 +15,29 @@
         {{ticketform.as_table }}
         <button>Send</button>
     </form>-->
-    <form action="{% url 'create_ticket' %}" class="compose-ticket" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <input disabled class="form-control" value="{{ request.user.email }}">
-        </div>
-        <div class="form-group">
-            <input type="hidden" class="user-id" id="{{ request.user.id }}">
-        </div>
-        <div class="form-group">
-              <input type="text" name="title" class="title" placeholder="Title">
-        </div>
-        <div class="form-group">
-             <select name="select_priority" class="select-priority">
-                <option value="">مهم جدا</option>
-                <option value="">مهم </option>
-                <option value="">غير مهم</option>
-                
+    <div class="form-container" id="{{request.user.id}}">
+        <form id="compose-ticket" method="POST">
+            {% csrf_token %}
+           
+            <div class="form-group">
+                <input disabled class="form-control" id="sender" value="{{ request.user.username }}">
+            </div>
+            <div class="form-group">
+                  <input type="text"  id="title" placeholder="Title">
+            </div>
+            <select id="priority">
+                <option value="high-priority">High-priority</option>
+                <option value="normal-priority">Normal-priority</option>
+                <option value="low-priority">Low-priority</option>
             </select>
-        </div>
-        <div class="form-group">
-            <textarea name="description" class="ticket-details" cols="30" rows="10" placeholder="Enter Ticket details"></textarea>
-        </div>
-        <input type="submit" class="btn btn-primary">
-    </form>
-    
+            
+            <div class="form-group">
+                <textarea  id="description" cols="30" rows="10" placeholder="Enter Ticket details"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+        
     
     <br>
     <div class="all_tickets">
