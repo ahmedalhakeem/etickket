@@ -5,10 +5,11 @@
 <br>
     <h1>مسؤول شعبة تكنلوجيا المعلومات</h1>
     <br>
-    <div class="convert-ticket">
+    <div id="convert-ticket">
         <form class="convert-form">
             Ticket Number : <input type="number" id="ticket-number">
                             <select  id="selected_solver">
+                                <option value="" disabled selected>Select IT Person</option>
                                 {% for it_user in it_users %}
                                 <option value="{{it_user.username}}">{{it_user.username}}</option>
                                 {% endfor %}
