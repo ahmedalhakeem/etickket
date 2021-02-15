@@ -180,3 +180,13 @@ def tickets(request, emp_id):
     #print(sender)
 
     return JsonResponse({'success': "responded successfully"})
+
+@csrf_exempt
+def convert_ticket(request, user_id):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST method is required"})
+    data = json.loads(request.body)
+    ticket = Tickets.objects.get(pk=data['id'])
+    it_user = User.objects.get(username=data['it_user'])
+    print(it_user)
+    return JsonResponse({'success': "successfully converted"})

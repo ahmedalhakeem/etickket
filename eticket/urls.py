@@ -6,10 +6,6 @@ urlpatterns =[
     path("", views.index, name="index"),
     path("login_master", views.login_master, name="login_master"),
     path("logout_page", views.logout_page, name="logout_page"),
-    #path("login_dep_mgr", views.login_dep_mgr, name="login_dep_mgr"),
-    #path("login_sec_mgr", views.login_sec_mgr, name="login_sec_mgr"),
-    #path("login_it", views.login_it, name="login_it"),
-    #path("login_emp", views.login_emp, name="login_emp"),
     path("register_emp", views.register_emp, name="register_emp"),
     path("profile_emp/<int:emp_id>", views.profile_emp, name="profile_emp"),
     path("manager_profile/<int:user_id>", views.manager_profile, name="manager_profile"),
@@ -18,5 +14,6 @@ urlpatterns =[
     path("sec_mgr_profile/<int:user_id>", views.sec_mgr_profile, name="sec_mgr_profile"),
 
     # API routes
-    path("profile_emp/<int:emp_id>/tickets", views.tickets, name="tickets")
+    path("profile_emp/<int:emp_id>/tickets", views.tickets, name="tickets"),
+    path("sec_mgr_profile/<int:user_id>/convert_ticket", views.convert_ticket, name="convert_ticket")
 ]
