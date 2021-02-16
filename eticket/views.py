@@ -130,9 +130,12 @@ def manager_profile(request, user_id):
 @login_required
 def it_profile(request, user_id):
     it_user = User.objects.get(pk=user_id)
+    # Show all converted ticket to this user
+    ticket = Tickets.objects.filter(it_user=it_user)
     #ticket = TicketForm()
     return render (request, "eticket/it_profile.html",{
         "user": it_user,
+        "ticket": ticket
         #"ticket" : ticket
     })
 # profile page for department manager
@@ -183,10 +186,25 @@ def tickets(request, emp_id):
 
 @csrf_exempt
 def convert_ticket(request, user_id):
-    if request.method != "POST":
-        return JsonResponse({"error": "POST method is required"})
-    data = json.loads(request.body)
-    ticket = Tickets.objects.get(pk=data['id'])
-    it_user = User.objects.get(username=data['it_user'])
-    print(it_user)
-    return JsonResponse({'success': "successfully converted"})
+    if request.method=='GET':
+        return HttpResponse("PuT method is required")
+    #return JsonResponse({"error": "POST method is required"})
+
+    if request.method == 'PUT':
+
+        data = json.loads(request.body)
+        #query the converted ticket
+        if data.get('id') is not None:
+            ticket = Tickets.objects.get(pk=data['id'])
+        
+        it_user = User.objects.get(username = data.get('it_user'))
+        ticket.it_user = it_user
+        ticket.ticket_status = data.get('status')
+        ticket.save()
+
+    
+    #it_user = User.objects.get(username=data['it_user'])
+    #print(it_user)
+        print(ticket)
+
+        return JsonResponse({'success': "successfully converted"})

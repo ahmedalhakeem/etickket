@@ -2,9 +2,44 @@
 {% load static %}
 {% block title%}Technical Team{% endblock %}
 {% block body %}
+<br>
     <h1>شعبة تكنلوجيا المعلومات</h1>
     <h2>اسم المستخدم: {{user.username}}</h2>
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
     <a href="{% url 'register_emp' %}">تسجيل موظف جديد  </a>
 
+    <div class="all_tickets">
+        
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>ticket no.</th>
+                <th>ticket title</th>
+                <th>ticket type</th>
+                <th>ticket_priority</th>
+                <th>ticket_status</th>
+                <th>ticket date</th>
+                <th>ticket sender</th>
+                <th>ticket sender secttion</th>
+                <th>ticket sender department</th>
+                <th>ticket solver</th>
+            </tr>
+        </thead>
+
+        {% for item in ticket %}
+            <tr>
+                <td id="{{item.id}}">{{item.id}}</td>
+                <td>{{ item.title }}</td>
+                <td>{{item.ticket_type}}</td>
+                <td>{{item.ticket_priority}}</td>    
+                <td>{{item.ticket_status}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.employee}}</td>
+                <td>{{item.employee.section}}</td>
+                <td>{{item.employee.department}}</td>
+                <td>{{item.it_user}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 {% endblock %}
