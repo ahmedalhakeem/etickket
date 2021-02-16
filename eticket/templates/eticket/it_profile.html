@@ -7,6 +7,20 @@
     <h2>اسم المستخدم: {{user.username}}</h2>
     <a href="{% url 'logout_page' %}">تسجيل خروج</a>
     <a href="{% url 'register_emp' %}">تسجيل موظف جديد  </a>
+    <br>
+    <div class="done-ticket">
+        <form action=""  class="final-convert-ticket">
+            Ticket Number : <input type="number" id="ticketnumber">
+            Change Status : <select id="select-status">
+                <option disabled selected> Select Status</option>
+                <option id="done" value="accomplished">accomplished</option>
+                <option id="undone" value="accomplished">unaccomplished</option>
+            </select>
+            <input type="submit" value="Convert Ticket" id="submiticket">
+        </form>
+
+    </div>
+    <br>
 
     <div class="all_tickets">
         
@@ -42,4 +56,8 @@
         {% endfor %}
         </table>
     </div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'eticket/index3.js' %}"></script>
+
 {% endblock %}
